@@ -18,25 +18,42 @@ public class GroupCreationTests {
     wd= new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
     wd.get("https://mailbook.nl/");
+    login("marynelko@gmail.com", "Ab123456");
+  }
+
+  private void login(String userName, String password) {
     wd.findElement(By.linkText("Login")).click();
     wd.findElement(By.id("email")).click();
     wd.findElement(By.id("email")).clear();
-    wd.findElement(By.id("email")).sendKeys("marynelko@gmail.com");
+    wd.findElement(By.id("email")).sendKeys(userName);
     wd.findElement(By.id("password")).click();
     wd.findElement(By.id("password")).clear();
-    wd.findElement(By.id("password")).sendKeys("Ab123456");
+    wd.findElement(By.id("password")).sendKeys(password);
     wd.findElement(By.cssSelector("div[class='field row end']>button")).click();
   }
 
   @Test
   public void testGroupCreation(){
-    wd.findElement(By.cssSelector("div[class='field row addressbook']>button")).click();
+    goToAddContactPage();
+    initContactCreation(new contactData("Lars", "Jochansen"));
+    submitContactCreation();
+  }
+
+  private void initContactCreation(contactData contactData) {
     wd.findElement(By.id("to")).click();
     wd.findElement(By.id("to")).clear();
-    wd.findElement(By.id("to")).sendKeys("Lars");
+    wd.findElement(By.id("to")).sendKeys(contactData.getName());
     wd.findElement(By.id("lastName")).click();
     wd.findElement(By.id("lastName")).clear();
-    wd.findElement(By.id("lastName")).sendKeys("Jochansen");
+    wd.findElement(By.id("lastName")).sendKeys(contactData.getLastName());
+
+  }
+
+  private void goToAddContactPage() {
+    wd.findElement(By.cssSelector("div[class='field row addressbook']>button")).click();
+  }
+
+  private void submitContactCreation() {
     wd.findElement(By.cssSelector("div[class='field row end']>button")).click();
   }
 
