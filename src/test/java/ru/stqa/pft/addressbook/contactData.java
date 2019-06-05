@@ -1,10 +1,10 @@
 package ru.stqa.pft.addressbook;
 
-public class contactData {
+public class ContactData {
   private final String name;
   private final String lastName;
 
-  public contactData(String name, String lastName) {
+  public ContactData(String name, String lastName) {
     this.name = name;
     this.lastName = lastName;
   }
