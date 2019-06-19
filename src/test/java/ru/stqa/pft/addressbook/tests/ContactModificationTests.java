@@ -8,6 +8,10 @@ public class ContactModificationTests extends TestBase {
   @Test
   public void testContactModification() throws InterruptedException {
     app.getNavigationHelper().goToAddContactPage();
+    if (!app.getContactHelper().isThereAContact()) {
+      app.getContactHelper().createContact(new ContactData("Lars", "Johansen", "google"), true);
+    }
+    app.getNavigationHelper().goToAddContactPage();
     app.getContactHelper().selectContact();
     app.getContactHelper().modifyContact();
     app.getContactHelper().fillContactData(new ContactData("John", "Smith", null), false);

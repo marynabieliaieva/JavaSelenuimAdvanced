@@ -9,7 +9,6 @@ public class ContactCreationTests extends TestBase {
   @Test
   public void testContactCreation() throws InterruptedException {
     app.getNavigationHelper().goToAddContactPage();
-    app.getContactHelper().initContactCreation(new ContactData("Lars", "Johansen", "google"), true);
-    app.getContactHelper().submitContactCreation();
+    app.getContactHelper().createContact(new ContactData("Lars", "Johansen", "google"), true);
   }
 }

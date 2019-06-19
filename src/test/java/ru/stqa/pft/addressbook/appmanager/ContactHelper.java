@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 public class ContactHelper extends HelperBase {
 
@@ -47,4 +48,20 @@ public class ContactHelper extends HelperBase {
   public void selectContact() {
     click(By.cssSelector(".person-list > li:nth-child(1) > a:nth-child(1) > span:nth-child(3)"));
   }
+
+  public boolean isThereAContact() {
+    return isElementPresent(By.cssSelector("ul.person-list:nth-child(2) > li:nth-child(1) > a:nth-child(1) > span:nth-child(2) > img:nth-child(1)"));
+  }
+
+  public void createContact(ContactData contactData, boolean creation) throws InterruptedException {
+    initContactCreation(contactData, creation);
+    submitContactCreation();
+  }
+
+
 }
+
+
+
+
+

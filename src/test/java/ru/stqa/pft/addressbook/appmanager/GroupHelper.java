@@ -38,4 +38,12 @@ public class GroupHelper extends HelperBase {
     click(By.cssSelector("div.toolbar:nth-child(6) > button:nth-child(3)"));
   }
 
+  public void createGroup(GroupData group) throws InterruptedException {
+    initGroupCreation(group);
+    submitGroup();
+  }
+
+  public boolean isThereAGroup() {
+    return isElementPresent(By.cssSelector(".icon-group"));
+  }
 }

@@ -9,8 +9,7 @@ public class GroupCreationTest extends TestBase {
   @Test
   public void testContactCreation() throws InterruptedException {
     app.getNavigationHelper().goToAddContactPage();
-    app.getGroupHelper().initGroupCreation(new GroupData("Work"));
-    app.getGroupHelper().submitGroup();
+    app.getGroupHelper().createGroup(new GroupData("Work"));
   }
 }
 
