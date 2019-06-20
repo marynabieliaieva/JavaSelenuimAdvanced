@@ -13,6 +13,7 @@ public class ContactDeletionTest extends TestBase {
       app.getContactHelper().createContact(new ContactData("Lars", "Johansen", "google"), true);
     }
     app.getNavigationHelper().goToAddContactPage();
+
     app.getContactHelper().selectContact();
     app.getContactHelper().deleteContact();
   }

@@ -57,8 +57,7 @@ public class ContactHelper extends HelperBase {
     initContactCreation(contactData, creation);
     submitContactCreation();
   }
-
-
+  
 }
 
 

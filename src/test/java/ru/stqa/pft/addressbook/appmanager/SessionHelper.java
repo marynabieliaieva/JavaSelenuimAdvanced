@@ -16,15 +16,6 @@ public class SessionHelper extends HelperBase{
     type(By.id("login-password"), password);
     Thread.sleep(1000);
     click(By.cssSelector("form.login > button:nth-child(8)"));
-    ifUnexpectedButtonPresent();
   }
 
-  private void ifUnexpectedButtonPresent() {
-    if (wd.findElement(By.cssSelector(".logged > button:nth-child(5)")).isDisplayed()){
-      click(By.cssSelector(".logged > button:nth-child(5)"));
-    }
-    else{
-      wd.manage().window().maximize();
-    }
-  }
 }
