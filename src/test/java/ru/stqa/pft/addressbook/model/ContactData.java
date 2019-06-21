@@ -11,6 +11,8 @@ public class ContactData {
     this.firma = firma;
   }
 
+
+
   public String getName() {
     return name;
   }

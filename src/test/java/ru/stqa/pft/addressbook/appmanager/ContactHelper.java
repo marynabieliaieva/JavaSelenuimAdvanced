@@ -3,10 +3,14 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -45,8 +49,8 @@ public class ContactHelper extends HelperBase {
     click(By.cssSelector("span.button-group:nth-child(6) > button:nth-child(2)"));
   }
 
-  public void selectContact() {
-    click(By.cssSelector(".person-list > li:nth-child(1) > a:nth-child(1) > span:nth-child(3)"));
+  public void selectContact(int index) {
+    wd.findElements(By.cssSelector("img[src*='public-avatar']")).get(index).click();
   }
 
   public boolean isThereAContact() {
@@ -57,7 +61,23 @@ public class ContactHelper extends HelperBase {
     initContactCreation(contactData, creation);
     submitContactCreation();
   }
-  
+
+  public int getContactCount() throws InterruptedException {
+    Thread.sleep(1000);
+    wd.navigate().refresh();
+    return wd.findElements(By.cssSelector("img[src*='public-avatar']")).size();
+  }
+
+  public List<ContactData> getContactList() {
+    List<ContactData> contacts = new ArrayList<>();
+    List<WebElement> elements =  wd.findElements(By.cssSelector("a[href*='person']>span.name >strong"));
+    for (WebElement element : elements){
+      String contactName = element.getText();
+      ContactData contact = new ContactData(contactName, null, null);
+      contacts.add(contact);
+    }
+    return contacts;
+  }
 }
 
 
