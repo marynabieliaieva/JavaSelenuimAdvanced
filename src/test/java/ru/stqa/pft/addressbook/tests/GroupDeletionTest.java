@@ -4,19 +4,32 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.util.List;
+
 public class GroupDeletionTest extends TestBase {
 
   @Test
   public void testGroupDeletion() throws InterruptedException {
+    app.getNavigationHelper().goToAddContactPage();
     if (!app.getGroupHelper().isThereAGroup()) {
       app.getNavigationHelper().goToAddContactPage();
       app.getGroupHelper().createGroup(new GroupData("Work"));
     }
-    int before = app.getGroupHelper().getGroupCount();
-    app.getGroupHelper().selectGroup(before -1);
+    app.getNavigationHelper().goToAddContactPage();
+    //int before = app.getGroupHelper().getGroupCount(); - amount of the elements
+    List<GroupData> before = app.getGroupHelper().getGroupList(); //list of the elements
+    app.getGroupHelper().selectGroup(0);
     app.getGroupHelper().deleteGroup();
-    int after = app.getGroupHelper().getGroupCount();
-    Assert.assertEquals(after, before -1);
-    System.out.println("Was: " + before + ", now: " + after);
+    app.getNavigationHelper().goToAddContactPage();
+    //int after = app.getGroupHelper().getGroupCount(); - amount of the elements
+    List<GroupData> after = app.getGroupHelper().getGroupList(); //list of the elements
+    Assert.assertEquals(after.size(), before.size() - 1);
+    System.out.println("Was: " + before.size() + ", now: " + after.size());
+
+    before.remove(before.size() - 1);
+    Assert.assertEquals(before, after);
+    System.out.println(before);
+    System.out.println(after);
+
   }
 }

@@ -48,13 +48,13 @@ public class GroupHelper extends HelperBase {
   }
 
   public boolean isThereAGroup() {
-    return isElementPresent(By.cssSelector(".icon-group"));
+    return isElementPresent(By.cssSelector("a[href*='group']>span.name >strong"));
   }
 
   public int getGroupCount() throws InterruptedException {
     Thread.sleep(1000);
     wd.navigate().refresh();
-    return wd.findElements(By.cssSelector(".icon-group")).size();
+    return wd.findElements(By.cssSelector("a[href*='group']>span.name >strong")).size();
   }
 
   public List<GroupData> getGroupList() {
