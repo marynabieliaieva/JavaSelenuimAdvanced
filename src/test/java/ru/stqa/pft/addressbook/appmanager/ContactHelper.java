@@ -54,7 +54,7 @@ public class ContactHelper extends HelperBase {
   }
 
   public boolean isThereAContact() {
-    return isElementPresent(By.cssSelector("ul.person-list:nth-child(2) > li:nth-child(1) > a:nth-child(1) > span:nth-child(2) > img:nth-child(1)"));
+    return isElementPresent(By.cssSelector("a[href*='person']>span.name >strong"));
   }
 
   public void createContact(ContactData contactData, boolean creation) throws InterruptedException {

@@ -30,15 +30,18 @@ public class GroupHelper extends HelperBase {
     click(By.cssSelector("span.button-group:nth-child(7) > button:nth-child(2)"));
   }
 
-  public void selectGroup(int index) {
-    wd.findElements(By.cssSelector(".icon-group")).get(index).click();
+  public void selectGroup(int index) throws InterruptedException {
+    Thread.sleep(1000);
+    wd.findElements(By.cssSelector("a[href*='group']>span.name >strong")).get(index).click();
   }
 
-  public void modifyGroup() {
+  public void modifyGroup() throws InterruptedException {
+    Thread.sleep(1000);
     click(By.cssSelector("span.button-group:nth-child(6) > button:nth-child(2)"));
   }
 
-  public void deleteGroup(){
+  public void deleteGroup() throws InterruptedException {
+    Thread.sleep(1000);
     click(By.cssSelector("div.toolbar:nth-child(6) > button:nth-child(3)"));
   }
 
@@ -59,12 +62,14 @@ public class GroupHelper extends HelperBase {
 
   public List<GroupData> getGroupList() {
     List<GroupData> groups = new ArrayList<>();
-    List<WebElement> elements =  wd.findElements(By.cssSelector("a[href*='group']>span.name >strong"));
-    for (WebElement element : elements){
+    List<WebElement> elements = wd.findElements(By.cssSelector("a[href*='group']>span.name >strong"));
+    for (WebElement element : elements) {
       String name = element.getText();
       GroupData group = new GroupData(name);
       groups.add(group);
+      System.out.println(groups);
     }
     return groups;
+
   }
 }
