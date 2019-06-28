@@ -4,13 +4,14 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 
-public class GroupModificationTests extends TestBase{
+public class GroupModificationTests extends TestBase {
 
   @Test
-  public void testGroupModification()throws InterruptedException {
+  public void testGroupModification() throws InterruptedException {
     app.getNavigationHelper().goToAddContactPage();
     //int before = app.getGroupHelper().getGroupCount();
     if (!app.getGroupHelper().isThereAGroup()) {
@@ -32,7 +33,13 @@ public class GroupModificationTests extends TestBase{
 
     before.remove(0); // delete group with old name from the list
     before.add(group); // add group with new name to list
+
+    //List sorted and comparation via lambda expressions
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    before.sort(byId);
+    after.sort(byId);
+    Assert.assertEquals(before, after);
     System.out.println("Was: " + new HashSet<Object>(before) + ", now: " + new HashSet<Object>(after));
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));// compare collections without order
+    // Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));// compare collections without order - obsolete
   }
 }

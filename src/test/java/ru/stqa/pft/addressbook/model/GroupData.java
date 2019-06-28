@@ -12,24 +12,6 @@ public class GroupData {
             '}';
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    GroupData groupData = (GroupData) o;
-
-    if (id != groupData.id) return false;
-    return groupName != null ? groupName.equals(groupData.groupName) : groupData.groupName == null;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = id;
-    result = 31 * result + (groupName != null ? groupName.hashCode() : 0);
-    return result;
-  }
-
   public GroupData(int id, String groupName) {
 
     this.id = id;
@@ -38,9 +20,24 @@ public class GroupData {
   }
 
   public GroupData(String groupName) {
-    this.id = 0;
+    this.id = Integer.MAX_VALUE; // because of that group will be at the last place
     this.groupName = groupName;
 
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    GroupData groupData = (GroupData) o;
+
+    return groupName != null ? groupName.equals(groupData.groupName) : groupData.groupName == null;
+  }
+
+  @Override
+  public int hashCode() {
+    return groupName != null ? groupName.hashCode() : 0;
   }
 
   public String getgroupName() {

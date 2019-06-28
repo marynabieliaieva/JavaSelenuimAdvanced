@@ -18,7 +18,7 @@ public class GroupDeletionTest extends TestBase {
     app.getNavigationHelper().goToAddContactPage();
     //int before = app.getGroupHelper().getGroupCount(); - amount of the elements
     List<GroupData> before = app.getGroupHelper().getGroupList(); //list of the elements
-    app.getGroupHelper().selectGroup(before.size() - 1);
+    app.getGroupHelper().selectGroup(0);
     app.getGroupHelper().deleteGroup();
     app.getNavigationHelper().goToAddContactPage();
     //int after = app.getGroupHelper().getGroupCount(); - amount of the elements
@@ -26,7 +26,7 @@ public class GroupDeletionTest extends TestBase {
     Assert.assertEquals(after.size(), before.size() - 1);
     System.out.println("Was: " + before.size() + ", now: " + after.size());
 
-    before.remove(before.size() - 1);
+    before.remove(0);
     Assert.assertEquals(before, after);
     System.out.println(before);
     System.out.println(after);

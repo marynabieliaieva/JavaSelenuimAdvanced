@@ -30,17 +30,17 @@ public class GroupCreationTest extends TestBase {
         max = g.getId();
     }*/
 
-    Comparator<? super GroupData> byId = new Comparator<GroupData>() { // new (java 8) option to find maximum value in the list
-      @Override
-      public int compare(GroupData o1, GroupData o2) {
-        return Integer.compare(o1.getId(), o2.getId());
-      }
-    };
-    int max1 = after.stream().max(byId).get().getId();
-    group.setId(max1);
+    // new (java 8) option to find maximum value in the list
+
+
+    // group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId()); - get maximum id
     before.add(group);
+    Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
+    before.sort(byId);
+    after.sort(byId);
     System.out.println("Was: " + before + ", now: " + after);
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after)); // compare collections without order
+    Assert.assertEquals(before, after);
+    //Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after)); // compare collections without order  - obsolete
   }
 }
 
