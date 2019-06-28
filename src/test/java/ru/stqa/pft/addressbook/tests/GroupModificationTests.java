@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
@@ -10,28 +11,31 @@ import java.util.List;
 
 public class GroupModificationTests extends TestBase {
 
-  @Test
-  public void testGroupModification() throws InterruptedException {
-    app.getNavigationHelper().goToAddContactPage();
+  @BeforeMethod
+  public void ensurePreconditions() throws InterruptedException {
+    app.goTo().contactPage();
     //int before = app.getGroupHelper().getGroupCount();
     if (!app.getGroupHelper().isThereAGroup()) {
-      app.getNavigationHelper().goToAddContactPage();
-      app.getGroupHelper().createGroup(new GroupData("Work"));
+      app.goTo().contactPage();
+      app.getGroupHelper().createGroup(new GroupData().withName("Work"));
     }
-    app.getNavigationHelper().goToAddContactPage();
+  }
+
+  @Test
+  public void testGroupModification() throws InterruptedException {
+    app.goTo().contactPage();
+    int index = 0; //can be 'before.size() - 1'
     List<GroupData> before = app.getGroupHelper().getGroupList(); //list of the elements
-    app.getGroupHelper().selectGroup(0); //delete first group
-    app.getGroupHelper().modifyGroup();
-    GroupData group = new GroupData(before.get(0).getId(), "Personal");
-    app.getGroupHelper().fillGroupName(group); // change group name
-    app.getGroupHelper().submitGroup();
-    app.getNavigationHelper().goToAddContactPage();
-    //int after = app.getGroupHelper().getGroupCount();
+    GroupData group = new GroupData()
+            .withId(before.get(index).getId())
+            .withName("Personal");
+    app.getGroupHelper().modifyGroup(index, group);
+    app.goTo().contactPage();
     List<GroupData> after = app.getGroupHelper().getGroupList(); //list of the elements
     Assert.assertEquals(after.size(), before.size());
     System.out.println("Was: " + before.size() + ", now: " + after.size());
 
-    before.remove(0); // delete group with old name from the list
+    before.remove(index); // delete group with old name from the list
     before.add(group); // add group with new name to list
 
     //List sorted and comparation via lambda expressions
@@ -42,4 +46,6 @@ public class GroupModificationTests extends TestBase {
     System.out.println("Was: " + new HashSet<Object>(before) + ", now: " + new HashSet<Object>(after));
     // Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));// compare collections without order - obsolete
   }
+
+
 }

@@ -1,8 +1,8 @@
 package ru.stqa.pft.addressbook.model;
 
 public class GroupData {
-  private int id;
-  private final String groupName;
+  private int id = Integer.MAX_VALUE; // because of that group will be at the last place;
+  private String groupName;
 
   @Override
   public String toString() {
@@ -10,18 +10,6 @@ public class GroupData {
             "id='" + id + '\'' +
             ", groupName='" + groupName + '\'' +
             '}';
-  }
-
-  public GroupData(int id, String groupName) {
-
-    this.id = id;
-    this.groupName = groupName;
-
-  }
-
-  public GroupData(String groupName) {
-    this.id = Integer.MAX_VALUE; // because of that group will be at the last place
-    this.groupName = groupName;
 
   }
 
@@ -48,8 +36,14 @@ public class GroupData {
     return id;
   }
 
-  public void setId(int id) {
+  public GroupData withId(int id) {
     this.id = id;
+    return this;
+  }
+
+  public GroupData withName(String groupName) {
+    this.groupName = groupName;
+    return this;
   }
 
 }

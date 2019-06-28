@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class GroupCreationTest extends TestBase {
@@ -14,11 +13,11 @@ public class GroupCreationTest extends TestBase {
   @Test
   public void testGroupCreation() throws InterruptedException {
     //int before = app.getGroupHelper().getGroupCount(); - amount of the elements
-    app.getNavigationHelper().goToAddContactPage();
+    app.goTo().contactPage();
     List<GroupData> before = app.getGroupHelper().getGroupList(); //list of the elements
-    GroupData group = new GroupData("Work");
+    GroupData group = new GroupData().withName("Work");
     app.getGroupHelper().createGroup(group);
-    app.getNavigationHelper().goToAddContactPage();
+    app.goTo().contactPage();
     //int after = app.getGroupHelper().getGroupCount(); - amount of the elements
     List<GroupData> after = app.getGroupHelper().getGroupList(); //list of the elements
     Assert.assertEquals(after.size(), before.size() + 1);

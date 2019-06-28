@@ -10,7 +10,7 @@ public class NavigationHelper extends HelperBase{
     super(wd);
   }
 
-  public void goToAddContactPage() throws InterruptedException {
+  public void contactPage() throws InterruptedException {
     Thread.sleep(1000);
     By buttonLocator = By.cssSelector("span.button-group:nth-child(4) > button:nth-child(1)");
     if (! isElementPresent(buttonLocator)&& wd.findElement(buttonLocator).getText().equals("Přidat kontakt")){
