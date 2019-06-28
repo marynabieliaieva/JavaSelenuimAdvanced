@@ -19,9 +19,9 @@ public class GroupModificationTests extends TestBase{
     }
     app.getNavigationHelper().goToAddContactPage();
     List<GroupData> before = app.getGroupHelper().getGroupList(); //list of the elements
-    app.getGroupHelper().selectGroup(before.size() - 1); //delete the last group
+    app.getGroupHelper().selectGroup(0); //delete first group
     app.getGroupHelper().modifyGroup();
-    GroupData group = new GroupData(before.get(before.size() - 1).getId(), "Personal");
+    GroupData group = new GroupData(before.get(0).getId(), "Personal");
     app.getGroupHelper().fillGroupName(group); // change group name
     app.getGroupHelper().submitGroup();
     app.getNavigationHelper().goToAddContactPage();
@@ -30,8 +30,9 @@ public class GroupModificationTests extends TestBase{
     Assert.assertEquals(after.size(), before.size());
     System.out.println("Was: " + before.size() + ", now: " + after.size());
 
-    before.remove(before.size() - 1); // delete group with old name from the list
+    before.remove(0); // delete group with old name from the list
     before.add(group); // add group with new name to list
-    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after)); // compare collections without order
+    System.out.println("Was: " + new HashSet<Object>(before) + ", now: " + new HashSet<Object>(after));
+    Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));// compare collections without order
   }
 }

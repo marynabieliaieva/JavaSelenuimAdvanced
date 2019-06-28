@@ -64,8 +64,9 @@ public class GroupHelper extends HelperBase {
     List<GroupData> groups = new ArrayList<>();
     List<WebElement> elements = wd.findElements(By.cssSelector("a[href*='group']>span.name >strong"));
     for (WebElement element : elements) {
-      String name = element.getText();
-      GroupData group = new GroupData(name);
+      String name = wd.findElement(By.cssSelector("a[href*='group']>span.name >strong")).getText();
+      int id = Integer.parseInt(wd.findElement(By.cssSelector("a[href*='group']")).getAttribute("href").substring(37));
+      GroupData group = new GroupData(id, name);
       groups.add(group);
       System.out.println(groups);
     }
