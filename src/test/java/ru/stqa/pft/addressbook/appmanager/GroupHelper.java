@@ -25,14 +25,20 @@ public class GroupHelper extends HelperBase {
     type(By.cssSelector(".group > input:nth-child(2)"), groupData.getgroupName());
   }
 
+  public int getGroupCount(){
+    return wd.findElements(By.cssSelector("a[href*='group']>span.name >strong")).size();
+  }
+
+  private Groups groupCache = null;
+
 
   public void submitGroup() throws InterruptedException {
-    Thread.sleep(1000);
+    Thread.sleep(600);
     click(By.cssSelector("span.button-group:nth-child(7) > button:nth-child(2)"));
   }
 
   public void selectGroupNew(GroupData group) throws InterruptedException {
-    Thread.sleep(1000);
+    Thread.sleep(600);
     selectGroupById(group.getId());
   }
 
@@ -42,19 +48,21 @@ public class GroupHelper extends HelperBase {
 
 
   public void modifyGroup() throws InterruptedException {
-    Thread.sleep(1000);
+    Thread.sleep(600);
     click(By.cssSelector("span.button-group:nth-child(6) > button:nth-child(2)"));
   }
 
   public void deleteGroup() throws InterruptedException {
-    Thread.sleep(1000);
+    Thread.sleep(600);
     click(By.cssSelector("div.toolbar:nth-child(6) > button:nth-child(3)"));
+    groupCache = null;
   }
 
 
   public void createGroup(GroupData group) throws InterruptedException {
     initGroupCreation(group);
     submitGroup();
+    groupCache = null;
   }
 
   public boolean isThereAGroup() {
@@ -62,15 +70,18 @@ public class GroupHelper extends HelperBase {
   }
 
   public Groups all() {
-    Groups groups = new Groups();
+    if (groupCache != null){
+      return new Groups(groupCache);
+    }
+    groupCache = new Groups();
     List<WebElement> elements = wd.findElements(By.cssSelector("a[href*='group']>span.name >strong"));
     for (WebElement element : elements) {
       String name = wd.findElement(By.cssSelector("a[href*='group']>span.name >strong")).getText();
       int id = Integer.parseInt(wd.findElement(By.cssSelector("a[href*='group']")).getAttribute("href").substring(37));
-      groups.add(new GroupData().withId(id).withName(name));
-      System.out.println(groups);
+      groupCache.add(new GroupData().withId(id).withName(name));
+      System.out.println(groupCache);
     }
-    return groups;
+    return new Groups(groupCache);
   }
 
   public void modifyGroup(GroupData group) throws InterruptedException {
@@ -78,5 +89,6 @@ public class GroupHelper extends HelperBase {
     modifyGroup();
     fillGroupName(group); // change group name
     submitGroup();
+    groupCache = null;
   }
 }

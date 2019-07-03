@@ -41,10 +41,6 @@ public class GroupModificationTests extends TestBase {
     Assert.assertEquals(after.size(), before.size());
     System.out.println("Was: " + before.size() + ", now: " + after.size());
 
-    //before.remove(modifiedGroup); // delete group with old name from the list
-    //before.add(group); // add group with new name to list
-
-    //Assert.assertEquals(before, after);
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
     System.out.println("Was: " + new HashSet<Object>(before) + ", now: " + new HashSet<Object>(after));
   }

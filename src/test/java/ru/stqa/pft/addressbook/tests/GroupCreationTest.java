@@ -21,8 +21,6 @@ public class GroupCreationTest extends TestBase {
     assertThat(after.size(), equalTo(before.size() + 1));
     System.out.println("Was: " + before.size() + ", now: " + after.size());
 
-    //group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
-    //before.add(group);
     System.out.println("Was: " + before + ", now: " + after);
     assertThat(after, equalTo(
             before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt())))); // Hamcrest assert

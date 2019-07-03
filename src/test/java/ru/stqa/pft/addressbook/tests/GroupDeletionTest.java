@@ -36,9 +36,7 @@ public class GroupDeletionTest extends TestBase {
     Groups after = app.getGroupHelper().all(); //list of the elements
     assertEquals(after.size(), before.size() - 1);
     System.out.println("Was: " + before.size() + ", now: " + after.size());
-
-    before.remove(deletedGroup);
-    assertEquals(before, after);
+    
     assertThat(after, equalTo(before.without(deletedGroup)));
     System.out.println(before);
     System.out.println(after);
