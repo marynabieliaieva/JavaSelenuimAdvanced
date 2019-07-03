@@ -5,8 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.GroupData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GroupHelper extends HelperBase {
 
@@ -29,10 +30,15 @@ public class GroupHelper extends HelperBase {
     click(By.cssSelector("span.button-group:nth-child(7) > button:nth-child(2)"));
   }
 
-  public void selectGroup(int index) throws InterruptedException {
+  public void selectGroupNew(GroupData group) throws InterruptedException {
     Thread.sleep(1000);
-    wd.findElements(By.cssSelector("a[href*='group']>span.name >strong")).get(index).click();
+    selectGroupById(group.getId());
   }
+
+  public void selectGroupById(int id) {
+    wd.findElement(By.cssSelector("a[href='/#abook/group/" + id + "']")).click();
+  }
+
 
   public void modifyGroup() throws InterruptedException {
     Thread.sleep(1000);
@@ -44,6 +50,7 @@ public class GroupHelper extends HelperBase {
     click(By.cssSelector("div.toolbar:nth-child(6) > button:nth-child(3)"));
   }
 
+
   public void createGroup(GroupData group) throws InterruptedException {
     initGroupCreation(group);
     submitGroup();
@@ -53,33 +60,22 @@ public class GroupHelper extends HelperBase {
     return isElementPresent(By.cssSelector("a[href*='group']>span.name >strong"));
   }
 
-  public int getGroupCount() throws InterruptedException {
-    Thread.sleep(1000);
-    wd.navigate().refresh();
-    return wd.findElements(By.cssSelector("a[href*='group']>span.name >strong")).size();
-  }
-
-  public List<GroupData> getGroupList() {
-    List<GroupData> groups = new ArrayList<>();
+  public Set<GroupData> all() {
+    Set<GroupData> groups = new HashSet<GroupData>();
     List<WebElement> elements = wd.findElements(By.cssSelector("a[href*='group']>span.name >strong"));
     for (WebElement element : elements) {
       String name = wd.findElement(By.cssSelector("a[href*='group']>span.name >strong")).getText();
       int id = Integer.parseInt(wd.findElement(By.cssSelector("a[href*='group']")).getAttribute("href").substring(37));
-      GroupData group = new GroupData()
-              .withId(id)
-              .withName(name);
-      groups.add(group);
+      groups.add(new GroupData().withId(id).withName(name));
       System.out.println(groups);
     }
     return groups;
-
   }
 
-  public void modifyGroup(int index, GroupData group) throws InterruptedException {
-    selectGroup(index); //delete first group
+  public void modifyGroup(GroupData group) throws InterruptedException {
+    selectGroupById(group.getId()); //delete first group
     modifyGroup();
     fillGroupName(group); // change group name
     submitGroup();
-    //int after = app.getGroupHelper().getGroupCount();
   }
 }
