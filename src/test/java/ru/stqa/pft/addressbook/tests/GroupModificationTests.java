@@ -37,6 +37,7 @@ public class GroupModificationTests extends TestBase {
             .withName("Personal");
     app.getGroupHelper().modifyGroup(group);
     app.goTo().contactPage();
+    assertThat(app.getGroupHelper().getGroupCount(), equalTo(before.size()));
     Groups after = app.getGroupHelper().all(); //list of the elements
     Assert.assertEquals(after.size(), before.size());
     System.out.println("Was: " + before.size() + ", now: " + after.size());

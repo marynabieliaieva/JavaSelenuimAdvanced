@@ -17,14 +17,15 @@ public class GroupCreationTest extends TestBase {
     GroupData group = new GroupData().withName("Work");
     app.getGroupHelper().createGroup(group);
     app.goTo().contactPage();
+    assertThat(app.getGroupHelper().getGroupCount(), equalTo(before.size() + 1));
     Groups after = app.getGroupHelper().all(); //list of the elements
     assertThat(after.size(), equalTo(before.size() + 1));
     System.out.println("Was: " + before.size() + ", now: " + after.size());
-
     System.out.println("Was: " + before + ", now: " + after);
     assertThat(after, equalTo(
             before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt())))); // Hamcrest assert
   }
+
 }
 
 
