@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import java.io.File;
 import java.util.List;
 
 public class ContactCreationTests extends TestBase {
@@ -14,7 +15,8 @@ public class ContactCreationTests extends TestBase {
     app.goTo().contactPage();
     //int before = app.getContactHelper().getContactCount(); - amount of the elements
     List<ContactData> before = app.getContactHelper().getContactList(); //list of the elements
-    app.getContactHelper().createContact(new ContactData("Lars", "Johansen", "google"), true);
+    //File photo = new File("src/test/resourсes/file.jpg");
+    app.getContactHelper().createContact(new ContactData("Lars", "Johansen", "google"/*, photo*/), true);
     app.goTo().contactPage();
     // int after = app.getContactHelper().getContactCount(); - amount of the elements
     List<ContactData> after = app.getContactHelper().getContactList(); //list of the elements
