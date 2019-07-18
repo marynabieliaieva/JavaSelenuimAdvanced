@@ -10,7 +10,7 @@ import java.util.List;
 public class ContactCreationTests extends TestBase {
 
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void testContactCreation() throws InterruptedException {
     app.goTo().contactPage();
     //int before = app.getContactHelper().getContactCount(); - amount of the elements

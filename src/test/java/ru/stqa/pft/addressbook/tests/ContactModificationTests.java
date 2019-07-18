@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ContactModificationTests extends TestBase {
 
-  @Test (enabled = false)
+  @Test (enabled = true)
   public void testContactModification() throws InterruptedException {
     app.goTo().contactPage();
     if (!app.getContactHelper().isThereAContact()) {

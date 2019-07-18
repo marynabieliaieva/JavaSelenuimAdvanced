@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ContactDeletionTest extends TestBase {
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void testContactDeletion() throws InterruptedException {
     app.goTo().contactPage();
     if (!app.getContactHelper().isThereAContact()) {
