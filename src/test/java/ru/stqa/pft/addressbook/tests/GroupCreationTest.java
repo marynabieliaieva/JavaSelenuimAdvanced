@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,19 +15,26 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTest extends TestBase {
   @DataProvider
-  public Iterator<Object[]> validGroups(){
+  public Iterator<Object[]> validGroups() throws IOException {
     List<Object[]> list = new ArrayList<Object[]>();
-    list.add(new Object[]{"test 1"});
+    /*list.add(new Object[]{"test 1"});
     list.add(new Object[]{"test 2"});
-    list.add(new Object[]{"test 3"});
+    list.add(new Object[]{"test 3"});*/
+    BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.csv")));
+    String line = reader.readLine();
+    while (line != null){
+      String[] split = line.split(";");
+      list.add(new Object[] {new GroupData().withName(split[0])});
+      line = reader.readLine();
+    }
     return list.iterator();
   }
 
   @Test(dataProvider = "validGroups")
-  public void testGroupCreation(String name) throws InterruptedException {
+  public void testGroupCreation(GroupData group) throws InterruptedException {
     app.goTo().contactPage();
     Groups before = app.getGroupHelper().all(); //list of the elements
-    GroupData group = new GroupData().withName(name);
+    //GroupData group = new GroupData().withName(name);
     app.getGroupHelper().createGroup(group);
     app.goTo().contactPage();
     assertThat(app.getGroupHelper().getGroupCount(), equalTo(before.size() + 1));
