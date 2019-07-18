@@ -1,6 +1,12 @@
 package ru.stqa.pft.addressbook.model;
 
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
+@XStreamAlias("group")
 public class GroupData {
+  @XStreamOmitField
   private int id = Integer.MAX_VALUE; // because of that group will be at the last place;
   private String groupName;
 
