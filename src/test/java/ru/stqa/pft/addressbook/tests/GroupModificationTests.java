@@ -44,5 +44,8 @@ public class GroupModificationTests extends TestBase {
 
     assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
     System.out.println("Was: " + new HashSet<Object>(before) + ", now: " + new HashSet<Object>(after));
+    verifyGroupListInUI();
   }
+
+
 }
