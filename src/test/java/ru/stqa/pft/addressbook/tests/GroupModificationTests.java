@@ -21,7 +21,7 @@ public class GroupModificationTests extends TestBase {
   @BeforeMethod
   public void ensurePreconditions() throws InterruptedException {
     app.goTo().contactPage();
-    if (!app.getGroupHelper().isThereAGroup()) {
+    if (app.db().groups().size()==0){
       app.goTo().contactPage();
       app.getGroupHelper().createGroup(new GroupData().withName("Work"));
     }
@@ -30,7 +30,7 @@ public class GroupModificationTests extends TestBase {
   @Test
   public void testGroupModification() throws InterruptedException {
     app.goTo().contactPage();
-    Groups before = app.getGroupHelper().all(); //list of the elements
+    Groups before = app.db().groups(); //list of the elements
     GroupData modifiedGroup = before.iterator().next();
     GroupData group = new GroupData()
             .withId(modifiedGroup.getId())
@@ -38,7 +38,7 @@ public class GroupModificationTests extends TestBase {
     app.getGroupHelper().modifyGroup(group);
     app.goTo().contactPage();
     assertThat(app.getGroupHelper().getGroupCount(), equalTo(before.size()));
-    Groups after = app.getGroupHelper().all(); //list of the elements
+    Groups after = app.db().groups(); //list of the elements
     Assert.assertEquals(after.size(), before.size());
     System.out.println("Was: " + before.size() + ", now: " + after.size());
 

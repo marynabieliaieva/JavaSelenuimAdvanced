@@ -16,7 +16,28 @@ import javax.persistence.Table;
 
 @XStreamAlias("group")
 public class GroupData {
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    GroupData groupData = (GroupData) o;
+
+    if (id != groupData.id) return false;
+    if (groupName != null ? !groupName.equals(groupData.groupName) : groupData.groupName != null) return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = id;
+    result = 31 * result + (groupName != null ? groupName.hashCode() : 0);
+    return result;
+  }
+
   @XStreamOmitField
+
   @Id
   @Column(name= "group_id")
   private int id = Integer.MAX_VALUE; // because of that group will be at the last place;
@@ -39,24 +60,6 @@ public class GroupData {
 
   public int getId() {
     return id;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    GroupData groupData = (GroupData) o;
-
-    if (id != groupData.id) return false;
-    return groupName != null ? groupName.equals(groupData.groupName) : groupData.groupName == null;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = id;
-    result = 31 * result + (groupName != null ? groupName.hashCode() : 0);
-    return result;
   }
 
   public GroupData withId(int id) {
