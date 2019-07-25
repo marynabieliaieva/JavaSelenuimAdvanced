@@ -22,6 +22,8 @@ dependencies{
     testCompile group: 'io.qameta.allure', name: 'allure-junit4', version: '2.12.1'
     compile group: 'ru.yandex.qatools.allure', name: 'allure-java-annotations', version: '1.4.4'
     compile("org.robotframework:robotframework:3.0")
+    compile("info.cukes:cucumber-java:1.2.4")
+    compile("info.cukes:cucumber-testng:1.2.4")
 }
 
 task testGroups(type: Test){
